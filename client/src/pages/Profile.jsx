@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from '../api/axios';
 import { toast } from 'react-toastify';
-import { updatePassword } from '../store/slices/authSlice';
+import { updatePassword, fetchMe } from '../store/slices/authSlice';
 
 export default function Profile() {
   const { user } = useSelector((s) => s.auth);
@@ -39,6 +39,7 @@ export default function Profile() {
     setLoading(true);
     try {
       await api.put('/users/profile', form);
+      dispatch(fetchMe());
       toast.success('Profile updated!');
     } catch {
       toast.error('Failed to update profile');

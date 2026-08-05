@@ -39,7 +39,7 @@ export const register = async (req, res) => {
 
     res.status(201).json({
       message: 'Account created successfully.',
-      user: { id: user._id, name: user.name, email: user.email, role: user.role },
+      user,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -65,7 +65,7 @@ export const login = async (req, res) => {
 
     res.json({
       message: 'Logged in successfully.',
-      user: { id: user._id, name: user.name, email: user.email, role: user.role },
+      user,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -130,7 +130,7 @@ export const resetPassword = async (req, res) => {
     const token = signToken(user._id);
     sendTokenCookie(res, token);
     
-    res.status(200).json({ message: 'Password reset successfully', user: { id: user._id, name: user.name, email: user.email, role: user.role } });
+    res.status(200).json({ message: 'Password reset successfully', user });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -150,7 +150,7 @@ export const updatePassword = async (req, res) => {
     const token = signToken(user._id);
     sendTokenCookie(res, token);
 
-    res.status(200).json({ message: 'Password updated successfully', user: { id: user._id, name: user.name, email: user.email, role: user.role } });
+    res.status(200).json({ message: 'Password updated successfully', user });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
