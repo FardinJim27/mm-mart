@@ -244,7 +244,7 @@ shared/
 ## Prerequisites
 
 - Node.js (v18+ recommended)
-- MongoDB Atlas or Local MongoDB
+- DB SQLite
 - Git
 
 ---
@@ -300,11 +300,6 @@ CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 ```
-
----
-## Admin Login
-email: admin@fexel.com
-password: admin123
 
 ---
 
