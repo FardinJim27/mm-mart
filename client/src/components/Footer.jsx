@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 export default function Footer() {
   const { items: categories } = useSelector((state) => state.categories);
+  const { user } = useSelector((state) => state.auth);
   const wishlist = useSelector((state) => state.wishlist.items);
   const wishlistCount = wishlist.length;
 
@@ -25,7 +26,7 @@ export default function Footer() {
         <div className="footer-links">
           <h4>Account</h4>
           <Link to="/profile">My Profile</Link>
-          <Link to="/orders">My Orders</Link>
+          <Link to={user?.role === 'admin' ? '/admin/orders' : '/orders'}>My Orders</Link>
           <Link to="/wishlist">Wishlist {wishlistCount > 0 && `(${wishlistCount})`}</Link>
         </div>
       </div>

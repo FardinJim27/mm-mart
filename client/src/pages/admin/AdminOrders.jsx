@@ -50,7 +50,7 @@ export default function AdminOrders() {
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>Date</th>
+              <th>Date & Time</th>
               <th>Customer</th>
               <th>Total</th>
               <th>Payment</th>
@@ -62,7 +62,7 @@ export default function AdminOrders() {
             {orders.map((o) => (
               <tr key={o._id}>
                 <td>#{o._id.slice(-8).toUpperCase()}</td>
-                <td>{new Date(o.createdAt).toLocaleDateString()}</td>
+                <td>{new Date(o.createdAt).toLocaleString()}</td>
                 <td>{o.user?.name || o.shippingAddress?.fullName}</td>
                 <td>৳{o.totalPrice?.toFixed(2)}</td>
                 <td>{o.isPaid ? 'Paid' : 'Unpaid'}</td>
