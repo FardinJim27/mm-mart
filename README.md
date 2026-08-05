@@ -252,11 +252,11 @@ shared/
 ## Clone Repository
 
 ```bash
-git clone https://github.com/Fouzia-Oreen/Fexel.git
+git clone https://github.com/FardinJim27/mm-mart.git
 ```
 
 ```bash
-cd Fexel
+cd mm-mart
 ```
 
 ---
@@ -337,16 +337,16 @@ This project is licensed under the **MIT License**.
 
 # 📬 Contact
 
-**Fouzia Oreen**
+**Fardin Jim**
 
-- 🌐 Portfolio: https://fouziaoreen.com
-- 💼 GitHub: https://github.com/Fouzia-Oreen
+- 🌐 Portfolio: https://fardinjim.netlify.app
+- 💼 GitHub: https://github.com/FardinJim27
 
 ---
 
 # ⭐ Support
 
-If you found **Fexel** helpful, consider giving this repository a **⭐**.
+If you found **MM MART** helpful, consider giving this repository a **⭐**.
 
 Your support helps motivate future open-source projects!
 
