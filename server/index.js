@@ -57,7 +57,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ── Health check ───────────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Fexel API is running 🚀' });
+  res.json({ status: 'OK', message: 'MM-MART API is running 🚀' });
 });
 
 // ── 404 handler ────────────────────────────────────────────────────────────
@@ -74,6 +74,6 @@ app.use((err, req, res, next) => {
 // ── Start server ───────────────────────────────────────────────────────────
 app.listen(PORT, async () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log('✅ SQLite database connected (server/fexel.db)');
+  console.log('✅ SQLite database connected (server/mm-mart.db)');
   await seedDatabase();
 });

@@ -5,7 +5,7 @@ import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DB_PATH = path.join(__dirname, 'fexel.db');
+const DB_PATH = path.join(__dirname, 'mm-mart.db');
 
 const db = new Database(DB_PATH);
 
@@ -179,7 +179,7 @@ export async function seedDatabase() {
   db.prepare(`
     INSERT INTO users (_id, name, email, password, role)
     VALUES (?, ?, ?, ?, ?)
-  `).run(customerId, 'Jane Doe', 'jane@fexel.com', customerPassword, 'customer');
+  `).run(customerId, 'Jane Doe', 'jane@mm-mart.com', customerPassword, 'customer');
 
   // Seed products
   const sampleProducts = [
@@ -189,7 +189,7 @@ export async function seedDatabase() {
       price: 349.99,
       discountPrice: 279.99,
       category: 'jackets',
-      brand: 'Fexel',
+      brand: 'MM-MART',
       sizes: ['S', 'M', 'L', 'XL', 'XXL'],
       colors: ['Black', 'Navy', 'Olive'],
       images: [{ url: 'https://images.unsplash.com/photo-1544923246-77307dd270b1?w=600', publicId: '' }],
@@ -206,7 +206,7 @@ export async function seedDatabase() {
       price: 459.99,
       discountPrice: 0,
       category: 'coats',
-      brand: 'Fexel',
+      brand: 'MM-MART',
       sizes: ['S', 'M', 'L', 'XL'],
       colors: ['Charcoal', 'Camel', 'Burgundy'],
       images: [{ url: 'https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?w=600', publicId: '' }],
@@ -223,7 +223,7 @@ export async function seedDatabase() {
       price: 129.99,
       discountPrice: 99.99,
       category: 'sweaters',
-      brand: 'Fexel',
+      brand: 'MM-MART',
       sizes: ['XS', 'S', 'M', 'L', 'XL'],
       colors: ['Cream', 'Forest Green', 'Rust'],
       images: [{ url: 'https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=600', publicId: '' }],
@@ -240,7 +240,7 @@ export async function seedDatabase() {
       price: 89.99,
       discountPrice: 69.99,
       category: 'hoodies',
-      brand: 'Fexel',
+      brand: 'MM-MART',
       sizes: ['S', 'M', 'L', 'XL', 'XXL'],
       colors: ['Heather Grey', 'Black', 'Navy'],
       images: [{ url: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600', publicId: '' }],
@@ -257,7 +257,7 @@ export async function seedDatabase() {
       price: 79.99,
       discountPrice: 0,
       category: 'scarves',
-      brand: 'Fexel',
+      brand: 'MM-MART',
       sizes: [],
       colors: ['Burgundy', 'Grey', 'Camel', 'Black'],
       images: [{ url: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=600', publicId: '' }],
@@ -274,7 +274,7 @@ export async function seedDatabase() {
       price: 199.99,
       discountPrice: 159.99,
       category: 'boots',
-      brand: 'Fexel',
+      brand: 'MM-MART',
       sizes: ['S', 'M', 'L', 'XL'],
       colors: ['Brown', 'Black'],
       images: [{ url: 'https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600', publicId: '' }],
@@ -291,7 +291,7 @@ export async function seedDatabase() {
       price: 39.99,
       discountPrice: 29.99,
       category: 'accessories',
-      brand: 'Fexel',
+      brand: 'MM-MART',
       sizes: ['S', 'M', 'L', 'XL'],
       colors: ['Black', 'Grey'],
       images: [{ url: 'https://images.unsplash.com/photo-1545170241-e3028951bf56?w=600', publicId: '' }],
@@ -308,7 +308,7 @@ export async function seedDatabase() {
       price: 149.99,
       discountPrice: 119.99,
       category: 'jackets',
-      brand: 'Fexel',
+      brand: 'MM-MART',
       sizes: ['XS', 'S', 'M', 'L', 'XL'],
       colors: ['Black', 'Red', 'Navy'],
       images: [{ url: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600', publicId: '' }],
@@ -379,7 +379,7 @@ export async function seedDatabase() {
 
   console.log('✅ Database seeded with 8 products, 2 users, and sample data');
   console.log('   👤 Admin: fardinjim77@gmail.com / admin123');
-  console.log('   👤 Customer: jane@fexel.com / customer123');
+  console.log('   👤 Customer: jane@mm-mart.com / customer123');
 }
 
 export default db;

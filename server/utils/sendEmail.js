@@ -28,7 +28,7 @@ const sendEmail = async (options) => {
   }
 
   const message = {
-    from: `${process.env.FROM_NAME || 'Fexel Fashion'} <${process.env.FROM_EMAIL || 'noreply@fexel.com'}>`,
+    from: `${process.env.FROM_NAME || 'MM-MART Fashion'} <${process.env.FROM_EMAIL || 'noreply@mm-mart.com'}>`,
     to: options.email,
     subject: options.subject,
     text: options.message,

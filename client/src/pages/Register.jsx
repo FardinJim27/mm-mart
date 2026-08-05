@@ -21,7 +21,7 @@ export default function Register() {
     e.preventDefault();
     const result = await dispatch(registerUser(form));
     if (registerUser.fulfilled.match(result)) {
-      toast.success('Account created! Welcome to Fexel 🎉');
+      toast.success('Account created! Welcome to MM-MART 🎉');
       navigate('/');
     }
   };
