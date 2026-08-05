@@ -22,6 +22,8 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import ProductCreate from './pages/admin/ProductCreate';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import Checkout from './pages/Checkout';
+import AdminOrders from './pages/admin/AdminOrders';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -53,10 +55,12 @@ export default function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+          <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
           <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+          <Route path="/admin/orders" element={<AdminRoute><AdminOrders /></AdminRoute>} />
           <Route path="/admin/products/new" element={<AdminRoute><ProductCreate /></AdminRoute>} />
           <Route path="/admin/products/:id/edit" element={<AdminRoute><ProductCreate /></AdminRoute>} />
           <Route path="*" element={

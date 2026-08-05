@@ -2,6 +2,23 @@ import Order from '../models/orderModel.js';
 import Cart from '../models/cartModel.js';
 import Stripe from 'stripe';
 
+// Store active SSE connections for admins
+let adminClients = [];
+
+// GET /api/orders/notifications (admin)
+export const orderNotifications = (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.flushHeaders();
+
+  adminClients.push(res);
+
+  req.on('close', () => {
+    adminClients = adminClients.filter(client => client !== res);
+  });
+};
+
 // POST /api/orders
 export const createOrder = async (req, res) => {
   try {
@@ -23,6 +40,11 @@ export const createOrder = async (req, res) => {
 
     // Clear cart after order
     Cart.clear(req.user._id);
+
+    // Notify connected admins via SSE
+    adminClients.forEach(client => {
+      client.write(`data: ${JSON.stringify({ orderId: order._id, total: order.totalPrice })}\n\n`);
+    });
 
     res.status(201).json({ order });
   } catch (error) {
