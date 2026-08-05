@@ -5,7 +5,7 @@
 </p> -->
 
 
-# Fexel 
+# 👔 MM MART 
 
 > A Stylish Full-Stack Winter Clothing Store Built with the MERN Stack. Discover a seamless online shopping experience with **secure authentication**, **wishlist**, **product reviews**, **Stripe payments**, **real-time order management**, and a **feature-rich admin dashboard**.
 
@@ -17,15 +17,15 @@
 
 # 🚀 Overview
 
-**Fexel** is a modern full-stack winter fashion marketplace built with the **MERN Stack (MongoDB, Express.js, React, Node.js)**.
+**👔 MM MART** is a modern full-stack winter fashion marketplace built with the **MERN Stack (MongoDB, Express.js, React, Node.js)**.
 
-Inspired by premium fashion brands, Fexel delivers a fast, responsive, and secure shopping experience where customers can browse products, manage wishlists, place secure orders, and track purchases, while administrators efficiently manage products, inventory, sales, and customer orders.
+Inspired by premium fashion brands, 👔 MM MART delivers a fast, responsive, and secure shopping experience where customers can browse products, manage wishlists, place secure orders, and track purchases, while administrators efficiently manage products, inventory, sales, and customer orders.
 
 ---
 
-# ✨ Why Fexel?
+# ✨ Why 👔 MM MART?
 
-- ❄️ Premium Winter Fashion Store
+- ❄️ Premium fashion crafted for effortless elegance.
 - ❤️ Wishlist & Favorites
 - ⭐ Product Ratings & Reviews
 - 🛒 Dynamic Shopping Cart
