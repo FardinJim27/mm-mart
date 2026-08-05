@@ -32,7 +32,9 @@ export default function ProductCreate() {
     imageUrl: '',
   });
 
-  const availableSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  const availableSizes = form.category?.toLowerCase() === 'footwear'
+    ? Array.from({ length: 10 }, (_, i) => String(36 + i))
+    : ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
   useEffect(() => {
     if (categories.length > 0 && !form.category && !id) {
@@ -378,7 +380,10 @@ export default function ProductCreate() {
           </div>
 
           <div className="field" style={{ marginTop: '1rem' }}>
-            <label>Sizes</label>
+            <label style={{ display: 'flex', alignItems: 'center' }}>
+              Sizes
+              {form.category?.toLowerCase() === 'footwear' && <span style={{fontSize: '0.8rem', color: '#888', fontWeight: 'normal', marginLeft: '0.5rem'}}>(European Shoe Sizes)</span>}
+            </label>
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
               {availableSizes.map((size) => (
                 <label key={size} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', cursor: 'pointer', background: 'var(--bg-primary)', padding: '0.5rem 1rem', borderRadius: '20px', border: '1px solid var(--border)' }}>

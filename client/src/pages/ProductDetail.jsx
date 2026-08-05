@@ -122,7 +122,10 @@ export default function ProductDetail() {
 
           {product.sizes?.length > 0 && (
             <div className="option-group">
-              <h4>Size</h4>
+              <h4 style={{ display: 'flex', alignItems: 'center' }}>
+                Size 
+                {product.category?.toLowerCase() === 'footwear' && <span style={{fontSize: '0.8rem', color: '#888', fontWeight: 'normal', marginLeft: '0.5rem'}}>(European Shoe Sizes)</span>}
+              </h4>
               <div className="option-chips">
                 {product.sizes.map((s) => (
                   <button key={s} className={`option-chip ${selectedSize === s ? 'active' : ''}`} onClick={() => setSelectedSize(s)}>{s}</button>

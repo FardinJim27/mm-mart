@@ -156,7 +156,7 @@ export async function seedDatabase() {
   console.log('🌱 Seeding database with sample data...');
 
   // Seed categories
-  const defaultCategories = ['jackets', 'coats', 'sweaters', 'hoodies', 'scarves', 'boots', 'accessories'];
+  const defaultCategories = ['jackets', 'coats', 'sweaters', 'hoodies', 'scarves', 'footwear', 'accessories'];
   const insertCategory = db.prepare('INSERT INTO categories (_id, name) VALUES (?, ?)');
   const insertCategoriesTx = db.transaction((cats) => {
     for (const cat of cats) {
@@ -273,9 +273,9 @@ export async function seedDatabase() {
       description: 'Rugged insulated boots built for harsh winter conditions. Features Thinsulate insulation rated to -25°F, waterproof leather and nylon upper, Vibram Arctic Grip outsole, and cushioned EVA midsole.',
       price: 199.99,
       discountPrice: 159.99,
-      category: 'boots',
+      category: 'footwear',
       brand: 'MM-MART',
-      sizes: ['S', 'M', 'L', 'XL'],
+      sizes: ['38', '39', '40', '41', '42', '43', '44', '45'],
       colors: ['Brown', 'Black'],
       images: [{ url: 'https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600', publicId: '' }],
       stock: 60,
