@@ -19,7 +19,7 @@ export default function Footer() {
           <Link to="/products">All Products</Link>
           {categories.slice(0, 4).map(cat => (
             <Link key={cat} to={`/products?category=${cat}`}>
-              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+              {cat}
             </Link>
           ))}
         </div>

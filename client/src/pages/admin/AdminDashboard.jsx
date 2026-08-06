@@ -60,6 +60,7 @@ export default function AdminDashboard() {
         <h1>Admin Dashboard</h1>
         <div className="admin-actions">
           <Link to="/admin/products/new" className="btn btn-primary">+ Add Product</Link>
+          <Link to="/admin/categories" className="btn btn-accent">Edit Category</Link>
           <Link to="/admin/orders" className="btn btn-ghost">Manage Orders</Link>
         </div>
       </div>

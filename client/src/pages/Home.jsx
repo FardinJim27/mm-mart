@@ -44,7 +44,7 @@ export default function Home() {
         <div className="categories-grid">
           {CATEGORIES.map((cat) => (
             <Link key={cat} to={`/products?category=${cat}`} className="category-card">
-              <span className="category-label">{cat.charAt(0).toUpperCase() + cat.slice(1)}</span>
+              <span className="category-label">{cat}</span>
             </Link>
           ))}
         </div>

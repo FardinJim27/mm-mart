@@ -18,6 +18,19 @@ class Category {
     }
     return { message: 'Category removed' };
   }
+
+  static async update(oldName, newName) {
+    let result;
+    const transaction = db.transaction(() => {
+      result = db.prepare('UPDATE categories SET name = ? WHERE name = ?').run(newName, oldName);
+      if (result.changes === 0) {
+        throw new Error('Category not found');
+      }
+      db.prepare('UPDATE products SET category = ? WHERE category = ?').run(newName, oldName);
+    });
+    transaction();
+    return { oldName, newName };
+  }
 }
 
 export default Category;

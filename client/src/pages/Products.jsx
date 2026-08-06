@@ -73,7 +73,7 @@ export default function Products() {
                 className={`filter-chip ${category === c ? 'active' : ''}`}
                 onClick={() => setParam('category', c)}
               >
-                {c.charAt(0).toUpperCase() + c.slice(1)}
+                {c}
               </button>
             ))}
           </div>

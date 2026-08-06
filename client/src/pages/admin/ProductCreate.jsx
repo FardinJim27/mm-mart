@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import api from '../../api/axios';
 import { toast } from 'react-toastify';
-import { FiSave, FiArrowLeft, FiUploadCloud, FiPlus, FiTrash2 } from 'react-icons/fi';
-import { addCategory, removeCategory } from '../../store/slices/categorySlice';
+import { FiSave, FiArrowLeft, FiUploadCloud, FiPlus, FiTrash2, FiEdit2, FiCheck, FiX } from 'react-icons/fi';
+import { addCategory, removeCategory, editCategory } from '../../store/slices/categorySlice';
 import Swal from 'sweetalert2';
 
 export default function ProductCreate() {
@@ -16,6 +16,8 @@ export default function ProductCreate() {
   const [error, setError] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [newCat, setNewCat] = useState('');
+  const [isEditingCat, setIsEditingCat] = useState(false);
+  const [editCatName, setEditCatName] = useState('');
   
   const { items: categories } = useSelector((state) => state.categories);
 
@@ -78,7 +80,26 @@ export default function ProductCreate() {
         setNewCat('');
         toast.success('Category added');
       })
-      .catch((err) => toast.error(err));
+      .catch((err) => toast.error(err || 'Failed to add category'));
+  };
+
+  const handleEditCategory = () => {
+    if (!form.category || !editCatName.trim()) return;
+    if (form.category === editCatName.trim()) {
+      setIsEditingCat(false);
+      return;
+    }
+    
+    dispatch(editCategory({ oldName: form.category, newName: editCatName.trim() }))
+      .unwrap()
+      .then((res) => {
+        setForm(prev => ({ ...prev, category: res.newName }));
+        setIsEditingCat(false);
+        toast.success('Category updated');
+      })
+      .catch(err => {
+        toast.error(err || 'Failed to update category');
+      });
   };
 
   const handleDeleteCategory = () => {
@@ -259,21 +280,44 @@ export default function ProductCreate() {
             <div className="field">
               <label htmlFor="category">Category</label>
               <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <select
-                  id="category"
-                  name="category"
-                  value={form.category}
-                  onChange={handleChange}
-                  required
-                  style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
-                >
-                  {categories.map((cat) => (
-                    <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>
-                  ))}
-                </select>
-                <button type="button" onClick={handleDeleteCategory} title="Delete selected category" style={{ padding: '0.75rem', borderRadius: '8px', border: 'none', background: 'var(--error)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                  <FiTrash2 />
-                </button>
+                {isEditingCat ? (
+                  <div style={{ display: 'flex', gap: '0.5rem', flex: 1 }}>
+                    <input
+                      type="text"
+                      value={editCatName}
+                      onChange={(e) => setEditCatName(e.target.value)}
+                      style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+                      autoFocus
+                    />
+                    <button type="button" onClick={handleEditCategory} title="Save category" style={{ padding: '0.75rem', borderRadius: '8px', border: 'none', background: 'var(--success)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                      <FiCheck />
+                    </button>
+                    <button type="button" onClick={() => setIsEditingCat(false)} title="Cancel edit" style={{ padding: '0.75rem', borderRadius: '8px', border: 'none', background: 'var(--text-secondary)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                      <FiX />
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <select
+                      id="category"
+                      name="category"
+                      value={form.category}
+                      onChange={handleChange}
+                      required
+                      style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+                    >
+                      {categories.map((cat) => (
+                        <option key={cat} value={cat}>{cat}</option>
+                      ))}
+                    </select>
+                    <button type="button" onClick={() => { setEditCatName(form.category); setIsEditingCat(true); }} title="Edit selected category" style={{ padding: '0.75rem', borderRadius: '8px', border: 'none', background: 'var(--accent)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                      <FiEdit2 />
+                    </button>
+                    <button type="button" onClick={handleDeleteCategory} title="Delete selected category" style={{ padding: '0.75rem', borderRadius: '8px', border: 'none', background: 'var(--error)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                      <FiTrash2 />
+                    </button>
+                  </>
+                )}
               </div>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 <input

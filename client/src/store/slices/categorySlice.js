@@ -29,10 +29,22 @@ export const removeCategory = createAsyncThunk(
   'categories/removeCategory',
   async (name, { rejectWithValue }) => {
     try {
-      await api.delete(`/categories/${name}`);
+      await api.delete(`/categories/${encodeURIComponent(name)}`);
       return name;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'Failed to remove category');
+    }
+  }
+);
+
+export const editCategory = createAsyncThunk(
+  'categories/editCategory',
+  async ({ oldName, newName }, { rejectWithValue }) => {
+    try {
+      const response = await api.put(`/categories/${encodeURIComponent(oldName)}`, { newName });
+      return { oldName, newName: response.data.name };
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || 'Failed to update category');
     }
   }
 );
@@ -68,6 +80,13 @@ const categorySlice = createSlice({
       })
       .addCase(removeCategory.fulfilled, (state, action) => {
         state.items = state.items.filter((c) => c !== action.payload);
+      })
+      .addCase(editCategory.fulfilled, (state, action) => {
+        const { oldName, newName } = action.payload;
+        const index = state.items.indexOf(oldName);
+        if (index !== -1) {
+          state.items[index] = newName;
+        }
       });
   },
 });
