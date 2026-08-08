@@ -25,6 +25,7 @@ db.exec(`
     password TEXT NOT NULL,
     role TEXT DEFAULT 'customer' CHECK(role IN ('customer', 'admin')),
     avatar TEXT DEFAULT '',
+    phone TEXT DEFAULT '',
     address_street TEXT DEFAULT '',
     address_city TEXT DEFAULT '',
     address_state TEXT DEFAULT '',
@@ -144,6 +145,9 @@ db.exec(`
     FOREIGN KEY (product_id) REFERENCES products(_id) ON DELETE CASCADE
   );
 `);
+
+// ── Migrations: add columns that may not exist in older DBs ───────────────
+try { db.exec(`ALTER TABLE users ADD COLUMN phone TEXT DEFAULT ''`); } catch (_) { /* column already exists */ }
 
 // ── Seed database on first run ─────────────────────────────────────────────
 export async function seedDatabase() {

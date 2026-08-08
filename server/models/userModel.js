@@ -7,9 +7,10 @@ const User = {
   findById(id, includePassword = false) {
     const cols = includePassword
       ? '*'
-      : '_id, name, email, role, avatar, address_street, address_city, address_state, address_zip, address_country, createdAt, updatedAt';
+      : '_id, name, email, role, avatar, phone, address_street, address_city, address_state, address_zip, address_country, createdAt, updatedAt';
     const user = db.prepare(`SELECT ${cols} FROM users WHERE _id = ?`).get(id);
     if (user && !includePassword) {
+      user.phone = user.phone || '';
       user.address = {
         street: user.address_street || '',
         city: user.address_city || '',
@@ -26,6 +27,7 @@ const User = {
     const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email?.toLowerCase());
     if (!user) return null;
     if (!includePassword) delete user.password;
+    user.phone = user.phone || '';
     user.address = {
       street: user.address_street || '',
       city: user.address_city || '',
@@ -59,13 +61,17 @@ const User = {
   },
 
   // Update user profile
-  updateProfile(id, { name, address }) {
+  updateProfile(id, { name, phone, address }) {
     const fields = [];
     const values = [];
 
     if (name !== undefined) {
       fields.push('name = ?');
       values.push(name);
+    }
+    if (phone !== undefined) {
+      fields.push('phone = ?');
+      values.push(phone);
     }
     if (address) {
       if (address.street !== undefined) { fields.push('address_street = ?'); values.push(address.street); }

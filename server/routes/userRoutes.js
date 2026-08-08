@@ -22,8 +22,8 @@ router.get('/profile', protect, async (req, res) => {
 // PUT /api/users/profile
 router.put('/profile', protect, async (req, res) => {
   try {
-    const { name, address } = req.body;
-    const user = User.updateProfile(req.user._id, { name, address });
+    const { name, phone, address } = req.body;
+    const user = User.updateProfile(req.user._id, { name, phone, address });
     res.json({ user });
   } catch (error) {
     res.status(500).json({ message: error.message });

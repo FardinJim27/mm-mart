@@ -9,16 +9,17 @@ export default function Checkout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cart } = useSelector((s) => s.cart);
+  const { user } = useSelector((s) => s.auth);
   const items = cart?.items || [];
 
   const [shippingAddress, setShippingAddress] = useState({
-    fullName: '',
-    street: '',
-    city: '',
-    state: '',
-    zip: '',
-    country: '',
-    phone: '',
+    fullName: user?.name || '',
+    street: user?.address?.street || '',
+    city: user?.address?.city || '',
+    state: user?.address?.state || '',
+    zip: user?.address?.zip || '',
+    country: user?.address?.country || '',
+    phone: user?.phone || '',
   });
 
   const [loading, setLoading] = useState(false);
