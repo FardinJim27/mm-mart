@@ -21,6 +21,12 @@ export default function ProductCreate() {
   
   const { items: categories } = useSelector((state) => state.categories);
 
+  const SIZE_TYPES = {
+    topwear:  { label: 'Top Wear',    hint: 'Standard clothing sizes',   sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'] },
+    bottomwear: { label: 'Bottom Wear', hint: 'Waist size in inches',       sizes: ['28', '30', '32', '34', '36', '38', '40', '42'] },
+    footwear: { label: 'Footwear',    hint: 'European shoe sizes',        sizes: ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'] },
+  };
+
   const [form, setForm] = useState({
     name: '',
     description: '',
@@ -29,14 +35,14 @@ export default function ProductCreate() {
     category: 'jackets',
     brand: '',
     stock: '',
+    sizeType: 'topwear',
     sizes: [],
     colors: '',
     imageUrl: '',
   });
 
-  const availableSizes = form.category?.toLowerCase() === 'footwear'
-    ? Array.from({ length: 10 }, (_, i) => String(36 + i))
-    : ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  const currentSizeType = SIZE_TYPES[form.sizeType] ?? SIZE_TYPES.topwear;
+  const availableSizes = currentSizeType.sizes;
 
   useEffect(() => {
     if (categories.length > 0 && !form.category && !id) {
@@ -50,6 +56,13 @@ export default function ProductCreate() {
       api.get(`/products/${id}`)
         .then(res => {
           const p = res.data.product;
+          // Auto-detect sizeType from existing sizes when editing
+          const detectSizeType = (sizes) => {
+            if (!sizes || sizes.length === 0) return 'topwear';
+            if (['36','37','38','39','40','41','42','43','44','45'].some(s => sizes.includes(s))) return 'footwear';
+            if (['28','30','32','34'].some(s => sizes.includes(s))) return 'bottomwear';
+            return 'topwear';
+          };
           setForm({
             name: p.name || '',
             description: p.description || '',
@@ -58,6 +71,7 @@ export default function ProductCreate() {
             category: p.category || '',
             brand: p.brand || '',
             stock: p.stock || 0,
+            sizeType: detectSizeType(p.sizes),
             sizes: p.sizes || [],
             colors: p.colors ? p.colors.join(', ') : '',
             imageUrl: p.images?.[0]?.url || '',
@@ -424,13 +438,36 @@ export default function ProductCreate() {
           </div>
 
           <div className="field" style={{ marginTop: '1rem' }}>
-            <label style={{ display: 'flex', alignItems: 'center' }}>
+            <label style={{ marginBottom: '0.5rem', display: 'block' }}>Size Type</label>
+            <div style={{ display: 'flex', gap: '0', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)', width: 'fit-content', marginBottom: '1rem' }}>
+              {Object.entries(SIZE_TYPES).map(([key, val]) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setForm(prev => ({ ...prev, sizeType: key, sizes: [] }))}
+                  style={{
+                    padding: '0.5rem 1.2rem',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontWeight: form.sizeType === key ? '700' : '400',
+                    background: form.sizeType === key ? 'var(--accent)' : 'var(--bg-primary)',
+                    color: form.sizeType === key ? 'white' : 'var(--text-secondary)',
+                    transition: 'all 0.2s ease',
+                    fontSize: '0.875rem',
+                  }}
+                >
+                  {val.label}
+                </button>
+              ))}
+            </div>
+
+            <label style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
               Sizes
-              {form.category?.toLowerCase() === 'footwear' && <span style={{fontSize: '0.8rem', color: '#888', fontWeight: 'normal', marginLeft: '0.5rem'}}>(European Shoe Sizes)</span>}
+              <span style={{ fontSize: '0.8rem', color: '#888', fontWeight: 'normal', marginLeft: '0.5rem' }}>({currentSizeType.hint})</span>
             </label>
-            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
               {availableSizes.map((size) => (
-                <label key={size} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', cursor: 'pointer', background: 'var(--bg-primary)', padding: '0.5rem 1rem', borderRadius: '20px', border: '1px solid var(--border)' }}>
+                <label key={size} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', cursor: 'pointer', background: 'var(--bg-primary)', padding: '0.5rem 1rem', borderRadius: '20px', border: form.sizes.includes(size) ? '1px solid var(--accent)' : '1px solid var(--border)', transition: 'border-color 0.15s' }}>
                   <input
                     type="checkbox"
                     checked={form.sizes.includes(size)}

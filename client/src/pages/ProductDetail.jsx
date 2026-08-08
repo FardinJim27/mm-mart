@@ -120,19 +120,24 @@ export default function ProductDetail() {
           </div>
           <p className="product-description">{product.description}</p>
 
-          {product.sizes?.length > 0 && (
-            <div className="option-group">
-              <h4 style={{ display: 'flex', alignItems: 'center' }}>
-                Size 
-                {product.category?.toLowerCase() === 'footwear' && <span style={{fontSize: '0.8rem', color: '#888', fontWeight: 'normal', marginLeft: '0.5rem'}}>(European Shoe Sizes)</span>}
-              </h4>
-              <div className="option-chips">
-                {product.sizes.map((s) => (
-                  <button key={s} className={`option-chip ${selectedSize === s ? 'active' : ''}`} onClick={() => setSelectedSize(s)}>{s}</button>
-                ))}
+          {product.sizes?.length > 0 && (() => {
+            const isFootwear = ['36','37','38','39','40','41','42','43','44','45'].some(s => product.sizes.includes(s)) && product.sizes.every(s => !isNaN(s) && Number(s) >= 36 && Number(s) <= 45);
+            const isBottomwear = ['28','30','32','34'].some(s => product.sizes.includes(s));
+            return (
+              <div className="option-group">
+                <h4 style={{ display: 'flex', alignItems: 'center' }}>
+                  Size
+                  {isFootwear && <span style={{fontSize: '0.8rem', color: '#888', fontWeight: 'normal', marginLeft: '0.5rem'}}>(European Shoe Sizes)</span>}
+                  {isBottomwear && <span style={{fontSize: '0.8rem', color: '#888', fontWeight: 'normal', marginLeft: '0.5rem'}}>(Waist Size in Inches)</span>}
+                </h4>
+                <div className="option-chips">
+                  {product.sizes.map((s) => (
+                    <button key={s} className={`option-chip ${selectedSize === s ? 'active' : ''}`} onClick={() => setSelectedSize(s)}>{s}</button>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {product.colors?.length > 0 && (
             <div className="option-group">
